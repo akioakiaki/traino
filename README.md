@@ -1,0 +1,2 @@
+# traino
+Note for training 
