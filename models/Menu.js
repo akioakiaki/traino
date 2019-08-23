@@ -16,7 +16,7 @@ const MenuSchema = new mongoose.Schema({
       sets: [
         {
           rep: {
-            type: String
+            type: Array
           }
         }
       ],

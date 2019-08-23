@@ -44,4 +44,87 @@ router.post(
   }
 );
 
+// @route    GET api/menu
+// @desc     get a menus
+// @access   Private
+router.get('/', auth, async (req, res) => {
+  try {
+    const menus = await Menu.find().sort({ date: -1 });
+    res.json(menus);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    DELETE api/menu/id
+// @desc     delete a menu
+// @access   Private
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const menu = await Menu.findById(req.params.id);
+
+    console.log(menu);
+
+    if (!menu) {
+      return res.status(404).json({ msg: 'メニューが見つかりません。' });
+    }
+
+    // Check user
+    if (menu.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'ユーザーは認証されていません。' });
+    }
+
+    await menu.remove();
+
+    res.json({ msg: 'メニューを消去しました。' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    POST api/menu/record/:id
+// @desc     add sets and rep
+// @access   Private
+router.post(
+  '/record/:id',
+  [
+    auth,
+    [
+      check('rep', 'rep数を入力してください')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    console.log('validatin passed');
+    try {
+      const user = await User.findById(req.user.id).select('-password');
+
+      const menu = await Menu.findById(req.params.id);
+
+      const newRep = {
+        rep: req.body.rep
+      };
+      const newRecord = {
+        sets: newRep
+      };
+
+      menu.records.unshift(newRecord);
+
+      await menu.save();
+
+      res.json(menu.records);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 module.exports = router;
