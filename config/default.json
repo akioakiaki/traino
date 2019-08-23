@@ -1,4 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://akihiro:Ah25259696@traino-egmzt.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "akiSecretToken"
-}
