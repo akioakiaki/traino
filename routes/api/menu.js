@@ -45,12 +45,26 @@ router.post(
 );
 
 // @route    GET api/menu
-// @desc     get a menus
+// @desc     get menus
 // @access   Private
 router.get('/', auth, async (req, res) => {
   try {
     const menus = await Menu.find().sort({ date: -1 });
     res.json(menus);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/menu/:id
+// @desc     get detailed data by id
+// @access   Private
+router.get('/', auth, async (req, res) => {
+  try {
+    const menu = await Menu.findById(req.params.id);
+    const record = menu.records.sort({ date: -1 });
+    res.json(record);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
