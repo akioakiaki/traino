@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator/check');
 const auth = require('../../middleware/auth');
 
 const Menu = require('../../models/Menu');
+const Record = require('../../models/Record');
 const User = require('../../models/User');
 
 // @route    POST api/menu
@@ -45,11 +46,11 @@ router.post(
 );
 
 // @route    GET api/menu
-// @desc     get menus
+// @desc     get one's menus
 // @access   Private
 router.get('/', auth, async (req, res) => {
   try {
-    const menus = await Menu.find().sort({ date: -1 });
+    const menus = await Menu.find({ user: req.user.id }).sort({ date: -1 });
     res.json(menus);
   } catch (err) {
     console.error(err.message);
@@ -106,7 +107,7 @@ router.post(
   [
     auth,
     [
-      check('rep', 'rep数を入力してください')
+      check('sets', 'rep数を入力してください')
         .not()
         .isEmpty()
     ]
@@ -116,24 +117,24 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    console.log('validatin passed');
     try {
-      const user = await User.findById(req.user.id).select('-password');
+      // const user = await User.findById(req.user.id).select('-password');
 
       const menu = await Menu.findById(req.params.id);
 
-      const newRep = {
-        rep: req.body.rep
-      };
-      const newRecord = {
-        sets: newRep
-      };
+      const newRecord = new Record({
+        title: req.body.title,
+        user: req.user.id,
+        sets: req.body.sets
+      });
 
-      menu.records.unshift(newRecord);
+      const record = await newRecord.save();
+
+      menu.records.unshift(record);
 
       await menu.save();
 
-      res.json(menu.records);
+      res.json(menu);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
