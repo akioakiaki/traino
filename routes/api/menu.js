@@ -61,11 +61,12 @@ router.get('/', auth, async (req, res) => {
 // @route    GET api/menu/:id
 // @desc     get detailed data by id
 // @access   Private
-router.get('/', auth, async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
   try {
     const menu = await Menu.findById(req.params.id);
-    const record = menu.records.sort({ date: -1 });
-    res.json(record);
+    console.log(menu);
+    // const record = menu.records.sort({ date: -1 });
+    res.json(menu);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
