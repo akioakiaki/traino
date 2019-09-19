@@ -1,6 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-const Landing = () => {
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+const Landing = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Redirect to='menus' />;
+  }
   return (
     <div>
       <div className='buttons'>
@@ -15,4 +21,12 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+Landing.propTypes = {
+  isAuthenticated: PropTypes.bool
+};
+
+const mapToStateProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapToStateProps)(Landing);
