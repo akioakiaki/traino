@@ -12,3 +12,5 @@ export const GET_MENU = 'GET_MENU';
 export const ADD_MENU = 'ADD_MENU';
 export const CLEAR_MENU = 'CLEAR_MENU';
 export const MENU_ERROR = 'MENU_ERROR';
+export const ADD_RECORD = 'ADD_RECORD';
+export const RECORD_ERROR = 'RECORD_ERROR';

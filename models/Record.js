@@ -10,6 +10,16 @@ const RecordSchema = new Schema({
     type: Array,
     required: true
   },
+  setss: [
+    {
+      set: {
+        type: Number
+      },
+      reps: {
+        type: Number
+      }
+    }
+  ],
   date: {
     type: Date,
     default: Date.now

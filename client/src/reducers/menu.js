@@ -3,7 +3,9 @@ import {
   GET_MENU,
   ADD_MENU,
   MENU_ERROR,
-  CLEAR_MENU
+  CLEAR_MENU,
+  ADD_RECORD,
+  RECORD_ERROR
 } from '../actions/types';
 
 const initialState = {
@@ -44,6 +46,18 @@ export default function(state = initialState, action) {
       return {
         ...state,
         menus: null,
+        loading: false
+      };
+    case ADD_RECORD:
+      return {
+        ...state,
+        menu: payload,
+        loading: false
+      };
+    case RECORD_ERROR:
+      return {
+        ...state,
+        menu: payload,
         loading: false
       };
     default:

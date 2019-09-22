@@ -126,7 +126,8 @@ router.post(
       const newRecord = new Record({
         title: req.body.title,
         user: req.user.id,
-        sets: req.body.sets
+        sets: req.body.sets,
+        setss: req.body.setss
       });
 
       const record = await newRecord.save();
