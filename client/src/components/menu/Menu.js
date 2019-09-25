@@ -11,12 +11,12 @@ const Menu = ({ getMenu, menu: { menu, loading }, match }) => {
     getMenu(match.params.id);
   }, []);
 
-  return loading && menu === null ? (
+  return loading && menu == null ? (
     <Spinner />
   ) : (
     <Fragment>
       <div>menuだよ</div>
-      <MenuAddRecord />
+      <MenuAddRecord recordId={menu._id} />
       <MenuRecords menu={menu} />
     </Fragment>
   );

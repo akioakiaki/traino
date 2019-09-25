@@ -6,6 +6,7 @@ const auth = require('../../middleware/auth');
 const Menu = require('../../models/Menu');
 const Record = require('../../models/Record');
 const User = require('../../models/User');
+const moment = require('moment');
 
 // @route    POST api/menu
 // @desc     Create a menu
@@ -64,7 +65,7 @@ router.get('/', auth, async (req, res) => {
 router.get('/:id', auth, async (req, res) => {
   try {
     const menu = await Menu.findById(req.params.id);
-    console.log(menu);
+
     // const record = menu.records.sort({ date: -1 });
     res.json(menu);
   } catch (err) {
@@ -79,8 +80,6 @@ router.get('/:id', auth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
   try {
     const menu = await Menu.findById(req.params.id);
-
-    console.log(menu);
 
     if (!menu) {
       return res.status(404).json({ msg: 'メニューが見つかりません。' });
@@ -103,12 +102,55 @@ router.delete('/:id', auth, async (req, res) => {
 // @route    POST api/menu/record/:id
 // @desc     add sets and rep
 // @access   Private
+// router.post(
+//   '/record/:id',
+//   [
+//     auth,
+//     [
+//       check('records', '記録を入力してください。')
+//         .not()
+//         .isEmpty()
+//     ]
+//   ],
+//   async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     try {
+//       // const user = await User.findById(req.user.id).select('-password');
+
+//       const menu = await Menu.findById(req.params.id);
+
+//       const newRecord = new Record({
+//         title: req.body.title,
+//         record: req.body.record
+//       });
+//       console.log(newRecord.record);
+
+//       const record = await newRecord.save();
+
+//       menu.records.unshift(record);
+
+//       await menu.save();
+
+//       res.json(menu);
+//     } catch (err) {
+//       console.error(err.message);
+//       res.status(500).send('Server Error');
+//     }
+//   }
+// );
+
+// @route    POST api/menu/record/:id
+// @desc     add sets and rep
+// @access   Private
 router.post(
   '/record/:id',
   [
     auth,
     [
-      check('sets', 'rep数を入力してください')
+      check('record', '記録を入力してください。')
         .not()
         .isEmpty()
     ]
@@ -119,22 +161,24 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      // const user = await User.findById(req.user.id).select('-password');
-
       const menu = await Menu.findById(req.params.id);
 
+      const date = moment().format('YYYY-MM-DD');
+
       const newRecord = new Record({
-        title: req.body.title,
-        user: req.user.id,
-        sets: req.body.sets,
-        setss: req.body.setss
+        menu: menu._id,
+        title: menu.title,
+        record: req.body.record,
+        date: date
       });
+      console.log(newRecord.record);
 
       const record = await newRecord.save();
 
       menu.records.unshift(record);
 
       await menu.save();
+      await record.save();
 
       res.json(menu);
     } catch (err) {

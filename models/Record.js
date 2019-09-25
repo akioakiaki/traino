@@ -2,17 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RecordSchema = new Schema({
-  menu_id: {
+  menu: {
     type: Schema.Types.ObjectId,
     ref: 'menu'
   },
-  sets: {
-    type: Array,
-    required: true
+  title: {
+    type: String,
+    ref: 'menu'
   },
-  setss: [
+  record: [
     {
       set: {
+        type: Number
+      },
+      weight: {
         type: Number
       },
       reps: {
@@ -21,8 +24,7 @@ const RecordSchema = new Schema({
     }
   ],
   date: {
-    type: Date,
-    default: Date.now
+    type: String
   }
 });
 

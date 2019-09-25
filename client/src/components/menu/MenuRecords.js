@@ -1,16 +1,23 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-const MenuRecords = ({ menu }) => (
+const MenuRecords = ({ menu, menu: { records } }) => (
   <Fragment>
     <div>{menu.title}</div>
     <div>
-      {menu.records.map(record => (
+      {records.map(chunk => (
         <div>
-          <div>{record.date}</div>
+          <div>{chunk.date && chunk.date}</div>
           <div>
-            {record.sets.map((set, index) => (
-              <div>{set}</div>
+            {chunk.record.map((chunk, index) => (
+              <div>
+                {chunk.set}セット目
+                <br />
+                {chunk.weight}kg
+                <br />
+                {chunk.reps}reps
+                <br />
+              </div>
             ))}
           </div>
         </div>
@@ -20,7 +27,7 @@ const MenuRecords = ({ menu }) => (
 );
 
 MenuRecords.propTypes = {
-  menu: PropTypes.object.isRequired
+  menu: PropTypes.object
 };
 
 export default MenuRecords;

@@ -78,7 +78,7 @@ export const getMenu = id => async dispatch => {
 };
 
 // Add record
-export const addRecord = (id, record) => async dispatch => {
+export const addRecord = (recordId, record) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -87,11 +87,12 @@ export const addRecord = (id, record) => async dispatch => {
     };
 
     const body = record;
+    console.log(record);
 
-    const res = await axios.post(`/api/menu/record${id}`, body, config);
+    const res = await axios.post(`/api/menu/record/${recordId}`, body, config);
 
     dispatch({
-      type: ADD_MENU,
+      type: ADD_RECORD,
       payload: res.data
     });
 
