@@ -31,7 +31,7 @@ const Menus = ({ getMenus, auth: { user }, menu: { menus, loading } }) => {
     </ReactModal>
   ));
 
-  return loading && menus === null ? (
+  return loading ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -52,10 +52,10 @@ const Menus = ({ getMenus, auth: { user }, menu: { menus, loading } }) => {
       ) : (
         <Fragment>
           <p>Menuがありません、追加してください。</p>
-          <Link to='/create-menu'>Menuを追加する</Link>
+          <button onClick={showModal}>メニューを追加する</button>
         </Fragment>
       )}
-      <button onClick={showModal}>Show modal</button>
+      <button onClick={showModal}>メニューを追加する</button>
     </Fragment>
   );
 };

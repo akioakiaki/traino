@@ -102,49 +102,6 @@ router.delete('/:id', auth, async (req, res) => {
 // @route    POST api/menu/record/:id
 // @desc     add sets and rep
 // @access   Private
-// router.post(
-//   '/record/:id',
-//   [
-//     auth,
-//     [
-//       check('records', '記録を入力してください。')
-//         .not()
-//         .isEmpty()
-//     ]
-//   ],
-//   async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ errors: errors.array() });
-//     }
-//     try {
-//       // const user = await User.findById(req.user.id).select('-password');
-
-//       const menu = await Menu.findById(req.params.id);
-
-//       const newRecord = new Record({
-//         title: req.body.title,
-//         record: req.body.record
-//       });
-//       console.log(newRecord.record);
-
-//       const record = await newRecord.save();
-
-//       menu.records.unshift(record);
-
-//       await menu.save();
-
-//       res.json(menu);
-//     } catch (err) {
-//       console.error(err.message);
-//       res.status(500).send('Server Error');
-//     }
-//   }
-// );
-
-// @route    POST api/menu/record/:id
-// @desc     add sets and rep
-// @access   Private
 router.post(
   '/record/:id',
   [
@@ -171,7 +128,6 @@ router.post(
         record: req.body.record,
         date: date
       });
-      console.log(newRecord.record);
 
       const record = await newRecord.save();
 

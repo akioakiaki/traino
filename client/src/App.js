@@ -29,8 +29,8 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <ModalProvider>
-        <Router>
+      <Router>
+        <ModalProvider>
           <Fragment>
             <Navbar />
             <Route exact path='/' component={Landing} />
@@ -44,8 +44,8 @@ const App = () => {
               </Switch>
             </section>
           </Fragment>
-        </Router>
-      </ModalProvider>
+        </ModalProvider>
+      </Router>
     </Provider>
   );
 };
