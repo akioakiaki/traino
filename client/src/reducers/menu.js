@@ -5,7 +5,8 @@ import {
   MENU_ERROR,
   CLEAR_MENU,
   ADD_RECORD,
-  RECORD_ERROR
+  RECORD_ERROR,
+  DELETE_MENU
 } from '../actions/types';
 
 const initialState = {
@@ -34,6 +35,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         menus: [payload, ...state.menus],
+        loading: false
+      };
+    case DELETE_MENU:
+      return {
+        ...state,
+        menus: state.menus.filter(menu => menu._id !== payload),
         loading: false
       };
     case MENU_ERROR:

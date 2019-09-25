@@ -5,7 +5,8 @@ import {
   ADD_MENU,
   GET_MENU,
   ADD_RECORD,
-  RECORD_ERROR
+  RECORD_ERROR,
+  DELETE_MENU
 } from './types';
 import { setAlert } from './alert';
 
@@ -46,7 +47,6 @@ export const addMenu = title => async dispatch => {
 
     dispatch(setAlert('新しいメニューが追加されました。'));
   } catch (err) {
-    console.log(err);
     const errors = err.response.data.errors;
 
     if (errors) {
@@ -77,8 +77,29 @@ export const getMenu = id => async dispatch => {
   }
 };
 
+// Delete menu by id
+export const deleteMenu = (id, history) => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/menu/${id}`);
+
+    dispatch({
+      type: DELETE_MENU,
+      payload: res.data
+    });
+
+    dispatch(setAlert('メニューが削除されました。', 'success'));
+
+    history.push('/menus');
+  } catch (err) {
+    dispatch({
+      type: MENU_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
 // Add record
-export const addRecord = (recordId, record) => async dispatch => {
+export const addRecord = (recordId, record, history) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -87,7 +108,6 @@ export const addRecord = (recordId, record) => async dispatch => {
     };
 
     const body = record;
-    console.log(record);
 
     const res = await axios.post(`/api/menu/record/${recordId}`, body, config);
 
@@ -97,8 +117,8 @@ export const addRecord = (recordId, record) => async dispatch => {
     });
 
     dispatch(setAlert('記録が追加されました。'));
+    history.push('/menus');
   } catch (err) {
-    console.log(err);
     const errors = err.response.data.errors;
 
     if (errors) {

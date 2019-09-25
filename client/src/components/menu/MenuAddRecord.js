@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addRecord } from '../../actions/menu';
+import { withRouter } from 'react-router-dom';
 
 const MenuAddRecord = ({ addRecord, recordId, history }) => {
   const [record, setRecord] = useState([]);
@@ -47,14 +48,13 @@ const MenuAddRecord = ({ addRecord, recordId, history }) => {
 
   const onClick = e => {
     e.preventDefault();
-    addRecord(recordId, { record });
+    addRecord(recordId, { record }, history);
     setRecord([]);
     setFormData({
       set: 1,
       weight: '',
       reps: ''
     });
-    history.push('/menus');
   };
 
   return (
@@ -117,4 +117,4 @@ MenuAddRecord.propTypes = {
 export default connect(
   null,
   { addRecord }
-)(MenuAddRecord);
+)(withRouter(MenuAddRecord));

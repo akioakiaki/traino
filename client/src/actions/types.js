@@ -10,6 +10,7 @@ export const LOGOUT = 'LOGOUT';
 export const GET_MENUS = 'GET_MENUS';
 export const GET_MENU = 'GET_MENU';
 export const ADD_MENU = 'ADD_MENU';
+export const DELETE_MENU = 'DELETE_MENU';
 export const CLEAR_MENU = 'CLEAR_MENU';
 export const MENU_ERROR = 'MENU_ERROR';
 export const ADD_RECORD = 'ADD_RECORD';

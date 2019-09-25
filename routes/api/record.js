@@ -33,7 +33,6 @@ router.post(
         title: menu.title,
         record: req.body.record
       });
-      console.log(newRecord.record);
 
       const record = await newRecord.save();
 
