@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { GET_MENUS, MENU_ERROR, ADD_MENU, GET_MENU } from './types';
+import {
+  GET_MENUS,
+  MENU_ERROR,
+  ADD_MENU,
+  GET_MENU,
+  ADD_RECORD,
+  RECORD_ERROR
+} from './types';
 import { setAlert } from './alert';
 
 // Get menus
@@ -53,10 +60,9 @@ export const addMenu = title => async dispatch => {
   }
 };
 
-// Get menu
+// Get menu by id
 export const getMenu = id => async dispatch => {
   try {
-    console.log('getMenu実行');
     const res = await axios.get(`/api/menu/${id}`);
 
     dispatch({
@@ -66,6 +72,41 @@ export const getMenu = id => async dispatch => {
   } catch (err) {
     dispatch({
       type: MENU_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Add record
+export const addRecord = (recordId, record) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const body = record;
+    console.log(record);
+
+    const res = await axios.post(`/api/menu/record/${recordId}`, body, config);
+
+    dispatch({
+      type: ADD_RECORD,
+      payload: res.data
+    });
+
+    dispatch(setAlert('記録が追加されました。'));
+  } catch (err) {
+    console.log(err);
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: RECORD_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }

@@ -21,7 +21,7 @@ const Login = ({ login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/menu' />;
+    return <Redirect to='/menus' />;
   }
 
   return (

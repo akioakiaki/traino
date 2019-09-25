@@ -4,17 +4,19 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getMenu } from '../../actions/menu';
 import MenuRecords from './MenuRecords';
+import MenuAddRecord from './MenuAddRecord';
 
 const Menu = ({ getMenu, menu: { menu, loading }, match }) => {
   useEffect(() => {
     getMenu(match.params.id);
-  }, [getMenu]);
-  return loading ? (
+  }, []);
+
+  return loading && menu == null ? (
     <Spinner />
   ) : (
     <Fragment>
       <div>menuだよ</div>
-      {/* <MenuRecords menu={menu} /> */}
+      <MenuAddRecord recordId={menu._id} />
       <MenuRecords menu={menu} />
     </Fragment>
   );
