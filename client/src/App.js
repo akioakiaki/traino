@@ -10,7 +10,7 @@ import Menus from './components/menus/Menus';
 import Menu from './components/menu/Menu';
 import PrivateRoute from './components/routing/PrivateRoute';
 import { ModalProvider } from 'react-modal-hook';
-import './App.css';
+import './scss/App.scss';
 
 //Redux
 import { Provider } from 'react-redux';
