@@ -6,35 +6,39 @@ import { logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
-    <ul>
+    <ul className='menu'>
       <li>
         <Link to='/menus'>
-          <i className='fas fa-user' /> <span className='hide-sm'>Menu</span>
+          <span>Menu</span>
         </Link>
       </li>
       <li>
         <a onClick={logout} href='#!'>
-          <i className='fas fa-sign-out-alt' />{' '}
-          <span className='hide-sm'>Logout</span>
+          <span>Logout</span>
         </a>
       </li>
     </ul>
   );
   const guestLinks = (
-    <ul>
+    <ul className='menu'>
       <li>
-        <Link to='/register'>register</Link>
+        <Link to='/register'>
+          <span>Sign up</span>
+        </Link>
       </li>
       <li>
-        <Link to='/login'>login</Link>
+        <Link to='/login'>
+          <span>Login</span>
+        </Link>
       </li>
     </ul>
   );
   return (
-    <nav>
-      <h1>
-        <Link to='/'>traino</Link>
-      </h1>
+    <nav className='Navbar'>
+      <Link className='logo' to='/'>
+        <h1>traino</h1>
+      </Link>
+
       {!loading && (
         <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
       )}

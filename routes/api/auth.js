@@ -45,7 +45,7 @@ router.post(
         return res.status(400).json({
           errors: [
             {
-              msg: 'ユーザー名またはパスワードの資格情報の検証に失敗しました。'
+              msg: 'メールアドレスとパスワードを確認して下さい。'
             }
           ]
         });
@@ -57,7 +57,7 @@ router.post(
         return res.status(400).json({
           errors: [
             {
-              msg: 'ユーザー名またはパスワードの資格情報の検証に失敗しました。'
+              msg: 'メールアドレスとパスワードを確認して下さい。'
             }
           ]
         });

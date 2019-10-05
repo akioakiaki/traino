@@ -1,4 +1,11 @@
 @import './_responsive.scss';
+@import './_reset.scss';
+@import './_config.scss';
+@import './_nav.scss';
+@import './_landing.scss';
+@import './_button.scss';
+@import './_login.scss';
+
 .App {
   text-align: center;
 }

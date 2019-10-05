@@ -1,0 +1,21 @@
+html *,
+html *:before,
+html *:after {
+  box-sizing: border-box;
+  outline: 0;
+}
+
+html * {
+  box-sizing: border-box;
+  outline: 0;
+}
+
+html {
+  box-sizing: border-box;
+  outline: 0;
+}
+
+html,
+body {
+  height: 100%;
+}

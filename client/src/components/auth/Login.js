@@ -25,23 +25,20 @@ const Login = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
-      <h1 className='large text-primary'>サインイン</h1>
-      <p className='lead'>
-        <i className='fas fa-user' /> サインインしてください
-      </p>
+    <section className='login'>
+      <h1>ログイン</h1>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <input
+            className='input'
             type='email'
             placeholder='Email Address'
             name='email'
             value={email}
             onChange={e => onChange(e)}
           />
-        </div>
-        <div className='form-group'>
           <input
+            className='input'
             type='password'
             placeholder='Password'
             name='password'
@@ -50,12 +47,16 @@ const Login = ({ login, isAuthenticated }) => {
             onChange={e => onChange(e)}
           />
         </div>
-        <input type='submit' className='btn btn-primary' value='Register' />
+        <div className='button'>
+          <button type='submit' className='inner'>
+            <span>ログイン</span>
+          </button>
+        </div>
       </form>
-      <p className='my-1'>
-        はじめての方はこちら<Link to='/register'>サインアップ</Link>
+      <p className='signup'>
+        <Link to='/register'>はじめての方はこちら</Link>
       </p>
-    </Fragment>
+    </section>
   );
 };
 
